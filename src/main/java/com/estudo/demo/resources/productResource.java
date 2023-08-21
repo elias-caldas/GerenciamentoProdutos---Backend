@@ -3,6 +3,7 @@ package com.estudo.demo.resources;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import com.estudo.demo.repository.productRepository;
 //Controller
 //receber requisições HTTP
 @RestController
+@CrossOrigin("*")
 @RequestMapping(value = "/demo")
 public class productResource {
     
@@ -26,29 +28,35 @@ public class productResource {
     productRepository pr;
 
     @GetMapping("/products")
-    public List<Product> ProductList(){
-        return pr.findAll();
+    public ResponseEntity<List<Product>> ProductList(){
+        List<Product> list = (List<Product>)  pr.findAll();
+        return ResponseEntity.status(200).body(list);
     }
 
     @GetMapping("/products/{id}")
-    public Product SpecificProduct(@PathVariable(value="id") long id){
-        return pr.findById(id);
+    public ResponseEntity<Product> SpecificProduct(@PathVariable(value="id") long id){
+        Product specificProduct_ = pr.findById(id);
+        return ResponseEntity.status(200).body(specificProduct_);
     }
 
     @PostMapping("/products")
-    public Product saveProduct(@RequestBody Product product){
-        return pr.save(product);
+    public ResponseEntity<Product>  saveProduct(@RequestBody Product product){
+        Product product_ = pr.save(product);
+        return ResponseEntity.status(201).body(product_);
     }
 
-    @DeleteMapping("/products")
+    @DeleteMapping("/products/{id}")
 
-    public void deleteProduct(@RequestBody Product product){
-        pr.delete(product);
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id){
+        pr.deleteById(id);
+        return ResponseEntity.status(204).build();
+
     }
 
     @PutMapping("/products")
-    public void putProduct(@RequestBody Product product){
-        pr.save(product);
+    public ResponseEntity<Product> putProduct (@RequestBody Product product){
+        Product newProduct = pr.save(product);
+        return ResponseEntity.status(201).body(newProduct);
     }
    
 }
