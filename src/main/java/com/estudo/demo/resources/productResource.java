@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.estudo.demo.model.Product;
 import com.estudo.demo.repository.productRepository;
+import com.estudo.demo.service.productService;
 
 //Controller
 //receber requisições HTTP
@@ -27,36 +28,37 @@ public class productResource {
     @Autowired
     productRepository pr;
 
+    public productService pService;
+
+    public productResource(productService pService){
+        this.pService = pService;
+    }
     @GetMapping("/products")
     public ResponseEntity<List<Product>> ProductList(){
-        List<Product> list = (List<Product>)  pr.findAll();
-        return ResponseEntity.status(200).body(list);
+        return ResponseEntity.status(200).body(pService.showProducts());
     }
 
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> SpecificProduct(@PathVariable(value="id") long id){
-        Product specificProduct_ = pr.findById(id);
-        return ResponseEntity.status(200).body(specificProduct_);
+        return ResponseEntity.status(200).body(pService.showSpecificProduct(id));
     }
 
     @PostMapping("/products")
     public ResponseEntity<Product>  saveProduct(@RequestBody Product product){
-        Product product_ = pr.save(product);
-        return ResponseEntity.status(201).body(product_);
+        return ResponseEntity.status(201).body(pService.postProduct(product));
     }
 
     @DeleteMapping("/products/{id}")
 
     public ResponseEntity<?> deleteProduct(@PathVariable Long id){
-        pr.deleteById(id);
+        pService.deleteProduct(id);
         return ResponseEntity.status(204).build();
 
     }
 
     @PutMapping("/products")
     public ResponseEntity<Product> putProduct (@RequestBody Product product){
-        Product newProduct = pr.save(product);
-        return ResponseEntity.status(201).body(newProduct);
+        return ResponseEntity.status(201).body(pService.putProduct(product));
     }
    
 }
