@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.estudo.demo.model.Product;
 import com.estudo.demo.repository.productRepository;
+
+import jakarta.validation.Valid;
 @Service
 public class productService {
     private productRepository repository;
@@ -24,12 +26,12 @@ public class productService {
         return newProduct;
     }
 
-    public Product putProduct(Product product){
+    public Product putProduct(@Valid Product product){
         Product newProduct = repository.save(product);
         return newProduct;
     }
 
-    public Product postProduct(Product product){
+    public Product postProduct(@Valid Product product){
         Product pProduct = repository.save(product);
         return pProduct;
     }

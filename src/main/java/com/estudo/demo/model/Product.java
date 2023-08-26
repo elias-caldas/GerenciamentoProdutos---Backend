@@ -7,9 +7,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name="tb_product")
+@Getter
+@Setter
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -17,8 +25,12 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Size( min = 3, message= "Campo 'nome' deve ter, no mínimo, três caracteres.")
+    @NotBlank(message = "Campo 'nome' não está em branco!")
     private String nome;
+
     private double quantidade;
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -41,6 +53,7 @@ public class Product implements Serializable {
             return false;
         return true;
     }
+
     private double valor;
 
     public Product (){
@@ -54,31 +67,6 @@ public class Product implements Serializable {
         this.valor = valor;
     }
 
-
-    public long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public double getQuantidade() {
-        return quantidade;
-    }
-    public void setQuantidade(double quantidade) {
-        this.quantidade = quantidade;
-    }
-    public double getValor() {
-        return valor;
-    }
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-
     
 }
+ 
