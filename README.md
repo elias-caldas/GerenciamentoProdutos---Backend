@@ -2,8 +2,6 @@
 
 Este é um projeto completo de uma aplicação de gerenciamento de produtos, desenvolvido como uma aplicação full-stack. A aplicação utiliza Java com Spring Boot para o backend e Vue.js para o frontend. O objetivo deste projeto é permitir que os usuários gerenciem produtos, incluindo a listagem, adição, edição e exclusão de produtos, com validação de entrada de dados.
 
-![Captura de tela da aplicação](screenshot.png)
-
 ## Recursos Principais
 
 - **Listagem de Produtos**: Visualize todos os produtos cadastrados em uma tabela.
